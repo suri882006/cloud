@@ -41,3 +41,12 @@ cf push
 
 Application deployed in SCP can be accessed here
 https://tracker.cfapps.us10.hana.ondemand.com/home
+
+===============
+git config --global user.email "you@example.com"
+git config --global user.name "Your Name"
+
+Stage changed files
+git add .
+git commit -m "message"
+git push
