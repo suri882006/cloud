@@ -1,0 +1,8 @@
+---
+applications:
+
+- name: cfdemosa
+  memory: 1024M
+  timeout: 300
+  random-route: false
+  path: target/demo.war

@@ -1,0 +1,4 @@
+FROM winamd64/openjdk:8u242-jdk-nanoserver-1809
+ARG JAR_FILE=target/demo.war
+COPY ${JAR_FILE} demo.war
+ENTRYPOINT ["java","-jar","/demo.war"]
