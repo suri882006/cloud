@@ -1,0 +1,43 @@
+===========================
+Deploying locally
+
+mvn spring-boot:run
+
+Application can be accessed here
+https://02ce4631trial-workspaces-ws-xrmsd-app1.us10.trial.applicationstudio.cloud.sap/home
+
+===========================
+Deploying to SCP
+
+cf login
+cf login -a https://api.cf.us10.hana.ondemand.com
+C:\Users\I349215>cf login -a https://api.cf.us10.hana.ondemand.com
+API endpoint: https://api.cf.us10.hana.ondemand.com
+
+Email: suraj.t.acharya@sap.com
+
+Password:
+Authenticating...
+OK
+
+Select an org:
+1. 02ce4631trial
+2. 02ce4631trial_dt
+
+Org (enter to skip): 1
+Targeted org 02ce4631trial
+
+Targeted space dev
+
+API endpoint:   https://api.cf.us10.hana.ondemand.com (API version: 3.81.0)
+User:           suraj.t.acharya@sap.com
+Org:            02ce4631trial
+Space:          dev
+
+======================
+
+Pushing the application (picks up the buildpacks from manifest.yaml)
+cf push
+
+Application deployed in SCP can be accessed here
+https://tracker.cfapps.us10.hana.ondemand.com/home
