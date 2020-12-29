@@ -6,3 +6,5 @@ applications:
   timeout: 300
   random-route: false
   path: target/tracker-0.1.war
+  services:
+  - xsuaa-tracker

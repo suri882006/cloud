@@ -2,11 +2,17 @@ package in.fourbits.cloud.controller;
 
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Enumeration;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import com.sap.db.jdbcext.DataSourceSAP;
 
@@ -18,6 +24,24 @@ public class BasicController {
         return "Basic API test";
     }
 
+    @GetMapping("/protected")
+    @PreAuthorize("#oauth2.hasScope('uaa.user')")
+    public String protectedResource() {
+        return "Basic API test";
+    }
+
+    @GetMapping("/tokens")
+    public void getTokens(final HttpServletRequest request, final HttpServletResponse response ) throws IOException {
+        response.setContentType("text/plain");
+        Enumeration headerNames = request.getHeaderNames();
+        while (headerNames.hasMoreElements()) {
+            String key = (String) headerNames.nextElement();
+            String value = request.getHeader(key);
+
+            response.getOutputStream().println(key+" : "+value);
+        }
+    }
+
     @GetMapping("/hanaconn")
     public String getConnectivity() {
          Connection connection = null;
@@ -25,13 +49,13 @@ public class BasicController {
 	      System.out.println("Hellllo");
 	      try {       
 	    	  DataSourceSAP dataSourceSAP = new DataSourceSAP();
-		      dataSourceSAP.setUser("USR_ANAGTI6Q2OI6JFTMGZBWOEKNP");
-		      dataSourceSAP.setPassword("Lk4N3-hVj6Pz_jD34dt-AH4xhgyOJOVj8hD_sN1hS3gyH2LQ35dXxssevbo0ifO8FQLgaP3dnIW6nzGmdhJIbraTR9NlmOJjhbS_7e2.acJV7D8O31O3YKwqbdozyedo");
+		      dataSourceSAP.setUser("GSTRMDC_1_ADNLOYQI9LZDMQA6IZ1EGBYI5_RT");
+		      dataSourceSAP.setPassword("Tv2HL.jI9lQ8qFw87CJGSerdpPEHnlt-mp4exnvwkqjsoJjJp8kTwQ9cL4uuVwRtoeDV.6HbDsxYOA6lb74Enbfv4mACqAnwui.t4rXx6m4RBsk95boFrKxzmQ1HM2Wt");
 		      
-		      dataSourceSAP.setServerName("zeus.hana.prod.us-east-1.whitney.dbaas.ondemand.com");
-		      dataSourceSAP.setPort(21022);
-		      dataSourceSAP.setUrl("jdbc:sap://zeus.hana.prod.us-east-1.whitney.dbaas.ondemand.com:21022?encrypt=true&validateCertificate=true&currentschema=USR_ANAGTI6Q2OI6JFTMGZBWOEKNP");
-		      dataSourceSAP.setSchema("USR_ANAGTI6Q2OI6JFTMGZBWOEKNP");
+		      dataSourceSAP.setServerName("7e728ca0-d02b-41e9-811d-1880be197234.hana.trial-eu10.hanacloud.ondemand.com");
+		      dataSourceSAP.setPort(443);
+		      dataSourceSAP.setUrl("jdbc:sap://7e728ca0-d02b-41e9-811d-1880be197234.hana.trial-eu10.hanacloud.ondemand.com:443?encrypt=true&validateCertificate=false&currentschema=GSTRMDC_1");
+		      dataSourceSAP.setSchema("GSTRMDC_1");
 		      connection = dataSourceSAP.getConnection();
 			                  
 	      } catch (SQLException e) {
@@ -43,7 +67,7 @@ public class BasicController {
 	         try {
 	            System.out.println("Connection to HANA successful!");
 	            Statement stmt = connection.createStatement();
-	            ResultSet resultSet = stmt.executeQuery("Select current_timestamp from dummy");
+	            ResultSet resultSet = stmt.executeQuery("Select * from \"GSTRMDC.db::HEADER\"");
 	            resultSet.next();
 	            response = resultSet.getString(1);
 	            System.out.println(response);
