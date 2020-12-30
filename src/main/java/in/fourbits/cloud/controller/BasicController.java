@@ -25,9 +25,9 @@ public class BasicController {
     }
 
     @GetMapping("/protected")
-    @PreAuthorize("#oauth2.hasScope('uaa.user')")
+    //@PreAuthorize("#oauth2.hasScope('uaa.user')")
     public String protectedResource() {
-        return "Basic API test";
+        return "This is a protected resource";
     }
 
     @GetMapping("/tokens")
